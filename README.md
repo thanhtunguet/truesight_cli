@@ -1,95 +1,71 @@
 # truesight_cli
 
-`truesight_cli` is a command-line tool for managing and validating Dart models. It provides commands to greet users and validate model files to ensure all fields are included in the `fields` getter without any duplication.
+A CLI tool for Flutter projects to manage localization keys and ensure they are correctly mapped to `.arb` files.
 
 ## Installation
 
-To install the `truesight_cli`, you need to have Dart installed on your machine. You can then activate the CLI globally using the following command:
+To install the `truesight_cli` globally from your GitHub repository:
 
-```sh
-dart pub global activate --source git https://github.com/thanhtunguet/truesight_cli.git
+```bash
+dart pub global activate --source git https://github.com/yourusername/truesight_cli.git
 ```
 
-## Usage
+Make sure to replace `yourusername` with your actual GitHub username.
 
-Once installed, you can use the `truesight_cli` from anywhere in your terminal.
+## Commands
 
-### Commands
+### `validate_models`
 
-#### 1. Greet Command
+Scans the `lib/models` and `lib/filters` directories to ensure all fields are added to the `fields` getter in model files and checks for duplications.
 
-The `greet` command allows you to greet someone by their name.
+#### Usage
 
-Usage:
-```sh
-truesight_cli greet --name=<name>
-```
-
-Example:
-```sh
-truesight_cli greet --name=John
-# Output: Hello, John!
-```
-
-If you don't provide a name, it defaults to "world".
-
-Example:
-```sh
-truesight_cli greet
-# Output: Hello, world!
-```
-
-#### 2. Validate Models Command
-
-The `validate_models` command scans specified directories (defaulting to `lib/models` and `lib/filters`) to ensure that all fields in the model files are added to the `fields` getter and there are no duplicates.
-
-Usage:
-```sh
-truesight_cli validate_models --folders=<folder1>,<folder2>,...
-```
-
-If no folders are specified, it defaults to scanning `lib/models` and `lib/filters`.
-
-Example with custom folders:
-```sh
-truesight_cli validate_models --folders=lib/models,lib/filters,lib/extra
-```
-
-To use the default folders:
-```sh
+```bash
 truesight_cli validate_models
-# This will scan the lib/models and lib/filters directories.
 ```
 
-This command will:
-- Scan through the specified directories.
-- Check each Dart file for declared fields.
-- Ensure all declared fields are included in the `fields` getter.
-- Ensure there are no duplicate fields in the `fields` getter.
+### `merge_arb`
 
-### Help
+Merges `.arb` files from the `lib/l10n/partials` folder into a single flat file for each locale and places the generated files into the `lib/l10n/generated` folder.
 
-For a complete list of commands and their usage, you can always use the `--help` option.
+#### Usage
 
-Global help:
-```sh
-truesight_cli --help
+```bash
+truesight_cli merge_arb
 ```
 
-Help for a specific command:
-```sh
-truesight_cli help <command>
+### `extract_keys`
+
+Scans the `lib` directory, extracts the callee of `AppLocalizations` or `AppLocale` keys, and writes them into partial `.arb` files in `lib/l10n/partials`. It also organizes the keys into corresponding files based on detected entity names. If the entity name does not exist, a new file is created.
+
+#### Usage
+
+```bash
+truesight_cli extract_keys -l <locales>
 ```
 
-Example:
-```sh
-truesight_cli help validate_models
+#### Arguments
+
+- `-l`, `--locales`: Supported locales. Default to `vi` and `en`.
+
+### Examples
+
+#### Extract keys with default locales (vi, en)
+
+```bash
+truesight_cli extract_keys
+```
+
+#### Extract keys with specific locales
+
+```bash
+truesight_cli extract_keys -l es,fr,de
 ```
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue on GitHub.
+Contributions are welcome! Please open an issue or submit a pull request on GitHub.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
