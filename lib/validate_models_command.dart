@@ -9,9 +9,18 @@ class ValidateModelsCommand extends Command<void> {
   final description =
       'Validate that all fields in model files are included in the fields getter and ensure no duplicates.';
 
+  ValidateModelsCommand() : super() {
+    argParser.addMultiOption(
+      'folders',
+      abbr: 'f',
+      help: 'List of folders to scan. Defaults to "lib/models".',
+      defaultsTo: ['lib/models', 'lib/filters'],
+    );
+  }
+
   @override
   void run() {
-    final directories = ['lib/models', 'lib/filters'];
+    final directories = argResults?['folders'] as List<String>;
 
     for (var dir in directories) {
       final directory = Directory(dir);
