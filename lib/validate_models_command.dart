@@ -60,7 +60,7 @@ class ValidateModelsCommand extends Command<void> {
     }
 
     final missingFields = fields.difference(declaredFields);
-    final duplicateFields = declaredFields.difference(fields);
+    // final duplicateFields = declaredFields.difference(fields);
 
     if (missingFields.isNotEmpty) {
       print('File ${file.path} is missing fields in the fields getter: ${missingFields.join(', ')}');
